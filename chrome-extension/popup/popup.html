@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI视频发布助手</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🎬 AI视频发布助手</h1>
+    </header>
+    
+    <div class="section">
+      <h2>平台选择</h2>
+      <div class="platform-buttons">
+        <button id="douyin-btn" class="platform-btn">
+          <span class="icon">📱</span>
+          <span>抖音</span>
+        </button>
+        <button id="weixin-btn" class="platform-btn">
+          <span class="icon">💬</span>
+          <span>视频号</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>视频目录</h2>
+      <div class="path-input">
+        <input type="text" id="video-path" placeholder="输入本地视频目录路径">
+        <button id="browse-btn">浏览</button>
+      </div>
+      <div id="video-list" class="video-list"></div>
+    </div>
+
+    <div class="section">
+      <h2>AI设置</h2>
+      <div class="setting-item">
+        <label>
+          <input type="checkbox" id="auto-topic" checked>
+          自动生成话题标签
+        </label>
+      </div>
+      <div class="setting-item">
+        <label>
+          <input type="checkbox" id="auto-desc" checked>
+          自动生成视频描述
+        </label>
+      </div>
+      <div class="setting-item">
+        <label>
+          <input type="checkbox" id="scheduled-publish">
+          定时发布
+        </label>
+        <input type="datetime-local" id="schedule-time" class="time-input">
+        <p class="hint">开启后第一个视频在指定时间发布，后续视频依次延后40-88分钟</p>
+      </div>
+      <div class="setting-item">
+        <label for="custom-prompt">自定义提示词:</label>
+        <textarea id="custom-prompt" placeholder="可选：输入自定义提示词指导AI生成内容"></textarea>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>发布队列</h2>
+      <div id="publish-queue" class="publish-queue"></div>
+    </div>
+
+    <div class="actions">
+      <button id="start-btn" class="primary-btn">开始发布</button>
+      <button id="stop-btn" class="danger-btn" disabled>停止</button>
+    </div>
+
+    <div id="status" class="status">
+      <span id="status-text">就绪</span>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
