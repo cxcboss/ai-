@@ -17,65 +17,35 @@
 - ✅ 自动上传视频文件
 - ✅ 自动填写描述和话题
 
-## 快速开始（推荐方式）
+## 快速开始
 
-### 1. 下载桌面应用
+### 1. 启动服务（Mac）
 
-下载对应系统的桌面应用：
+使用终端启动服务：
 
-- **Mac**: 下载 `视频发布器-darwin-x64.dmg`
-- **Windows**: 下载 `视频发布器-win32-x64.exe`
-
-### 2. 启动应用
-
-双击运行桌面应用，点击「启动服务」按钮。
-
-### 3. 加载 Chrome 扩展
-
-1. 打开 Chrome 浏览器
-2. 地址栏输入 `chrome://extensions/`
-3. 开启右上角的「开发者模式」
-4. 点击「加载已解压的扩展程序」
-5. 选择 `chrome-extension` 文件夹
-
-## 开发模式
-
-### 1. 安装 Node.js
-
-在运行此扩展之前，需要先安装 Node.js。
-
-- **下载地址**: https://nodejs.org/
-- 选择 LTS 版本下载并安装
-
-### 2. 启动本地服务
-
-#### Mac 用户
-双击运行 `start-mac.command` 文件
-
-或者在终端中运行：
 ```bash
 cd local-server
 npm install
 node server.js
 ```
 
-#### Windows 用户
-双击运行 `start-win.bat` 文件
+或者双击运行 `start-mac.command`
 
-或者在命令提示符中运行：
-```cmd
-cd local-server
-npm install
-node server.js
-```
-
-### 3. 加载 Chrome 扩展
+### 2. 加载 Chrome 扩展
 
 1. 打开 Chrome 浏览器
 2. 地址栏输入 `chrome://extensions/`
 3. 开启右上角的「开发者模式」
 4. 点击「加载已解压的扩展程序」
 5. 选择 `chrome-extension` 文件夹
+
+### 3. 使用桌面应用（可选）
+
+Mac 用户可以使用 Swift 原生编译的轻量级桌面应用：
+
+1. 在 Xcode 中打开 `video-publisher-swift` 文件夹
+2. 编译运行或导出为 .app
+3. 使用应用启动/停止服务
 
 ## 使用说明
 
@@ -84,9 +54,7 @@ node server.js
 1. 点击浏览器工具栏中的扩展图标
 2. 选择发布平台（抖音/视频号）
 3. 输入视频目录路径
-4. 配置发布选项：
-   - AI 生成文案：自动生成描述和话题
-   - 定时发布：设置发布时间
+4. 配置发布选项
 5. 点击「开始发布」
 
 ### 文件命名规则
@@ -98,11 +66,6 @@ node server.js
 | `原创-xxx.mp4` | 跳过活动选择 |
 | `test video.mp4` | 跳过 AI，使用默认话题 |
 
-### 定时发布
-
-- 单视频：按设置的时间发布
-- 多视频：第一个按设置时间，后续视频间隔 40-89 分钟
-
 ### 发布历史
 
 访问 http://localhost:3000/ 查看发布历史记录
@@ -112,38 +75,12 @@ node server.js
 ```
 chrome/
 ├── chrome-extension/          # Chrome 扩展
-│   ├── background/           # 后台脚本
-│   ├── content/              # 内容脚本
-│   ├── popup/               # 弹窗界面
-│   └── manifest.json         # 扩展配置
 ├── local-server/             # 本地服务
-│   ├── server.js            # 服务器主文件
-│   └── publish_history.json  # 发布记录
-├── video-publisher/          # 桌面应用
-│   ├── main.js              # Electron 主进程
-│   ├── index.html           # UI 界面
-│   └── package.json         # 配置
+├── video-publisher-swift/    # Mac 原生应用 (Swift)
 ├── start-mac.command         # Mac 启动脚本
 ├── start-win.bat            # Windows 启动脚本
 └── README.md                # 说明文档
 ```
-
-## 注意事项
-
-1. **浏览器提示**：定时发布时，浏览器会显示"正在被调试"提示，这是正常现象
-2. **服务窗口**：请勿关闭启动脚本窗口，否则服务将停止
-3. **网络连接**：确保网络连接正常，AI 生成文案需要访问 API
-
-## 常见问题
-
-### Q: 提示"无法连接本地服务"
-A: 确保已运行启动脚本，且终端窗口未关闭
-
-### Q: 定时发布时间不正确
-A: 检查电脑系统时间是否正确
-
-### Q: AI 生成文案失败
-A: 检查网络连接，确保可以访问 AI API
 
 ## 许可证
 
