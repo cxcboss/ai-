@@ -5,7 +5,6 @@
 
 import Cocoa
 
-@main
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     var window: NSWindow!
@@ -274,3 +273,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 }
+
+let app = NSApplication.shared
+let delegate = AppDelegate()
+app.delegate = delegate
+app.run()
