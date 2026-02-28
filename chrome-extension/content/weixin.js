@@ -205,8 +205,10 @@ class WeixinPublisher {
     const videoInfo = this.parseVideoName(video.name);
     const useAI = this.shouldUseAI(video.name, settings);
     
+    console.log('[视频号发布助手] 等待页面加载...');
     await this.waitForDomReady();
-    await this.delay(2000);
+    await this.delay(3000);
+    console.log('[视频号发布助手] 页面加载完成，开始操作');
 
     let uploadInput = await this.findUploadInputInDocument();
     
@@ -397,6 +399,10 @@ class WeixinPublisher {
     const videoPath = message.videoPath;
     const videoIndex = message.videoIndex;
     const totalVideos = message.totalVideos;
+    
+    console.log('[视频号发布助手] 等待页面完全加载...');
+    await this.delay(3000);
+    console.log('[视频号发布助手] 开始上传视频');
     
     const videoInfo = this.parseVideoName(video.name);
     const useAI = this.shouldUseAI(video.name, settings);

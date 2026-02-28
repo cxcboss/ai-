@@ -17,7 +17,28 @@
 - ✅ 自动上传视频文件
 - ✅ 自动填写描述和话题
 
-## 安装步骤
+## 快速开始（推荐方式）
+
+### 1. 下载桌面应用
+
+下载对应系统的桌面应用：
+
+- **Mac**: 下载 `视频发布器-darwin-x64.dmg`
+- **Windows**: 下载 `视频发布器-win32-x64.exe`
+
+### 2. 启动应用
+
+双击运行桌面应用，点击「启动服务」按钮。
+
+### 3. 加载 Chrome 扩展
+
+1. 打开 Chrome 浏览器
+2. 地址栏输入 `chrome://extensions/`
+3. 开启右上角的「开发者模式」
+4. 点击「加载已解压的扩展程序」
+5. 选择 `chrome-extension` 文件夹
+
+## 开发模式
 
 ### 1. 安装 Node.js
 
@@ -93,14 +114,18 @@ chrome/
 ├── chrome-extension/          # Chrome 扩展
 │   ├── background/           # 后台脚本
 │   ├── content/              # 内容脚本
-│   ├── popup/                # 弹窗界面
+│   ├── popup/               # 弹窗界面
 │   └── manifest.json         # 扩展配置
 ├── local-server/             # 本地服务
-│   ├── server.js             # 服务器主文件
+│   ├── server.js            # 服务器主文件
 │   └── publish_history.json  # 发布记录
+├── video-publisher/          # 桌面应用
+│   ├── main.js              # Electron 主进程
+│   ├── index.html           # UI 界面
+│   └── package.json         # 配置
 ├── start-mac.command         # Mac 启动脚本
-├── start-win.bat             # Windows 启动脚本
-└── README.md                 # 说明文档
+├── start-win.bat            # Windows 启动脚本
+└── README.md                # 说明文档
 ```
 
 ## 注意事项
