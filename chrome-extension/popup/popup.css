@@ -4,17 +4,24 @@
   box-sizing: border-box;
 }
 
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
 body {
   width: 400px;
-  height: 100vh;
+  min-height: 100vh;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 .container {
   padding: 16px;
-  height: 100%;
+  height: 100vh;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 header h1 {
@@ -98,8 +105,9 @@ header h1 {
 }
 
 .video-list {
-  max-height: calc(100vh - 520px);
-  min-height: 150px;
+  flex: 1;
+  min-height: 200px;
+  max-height: none;
   overflow-y: auto;
   margin-top: 10px;
   border: 1px solid #eee;
