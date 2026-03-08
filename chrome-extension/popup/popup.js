@@ -6,6 +6,7 @@ class PopupController {
     this.isPublishing = false;
     this.videos = [];
     this.loadTimeout = null;
+    this.draggedItem = null;
     this.init();
   }
 
@@ -151,7 +152,7 @@ class PopupController {
         this.selectedVideos = [...data.videos];
         this.renderVideoList(data.videos);
         this.renderPublishQueue();
-        this.updateStatus(`✓ 已选择 ${data.videos.length} 个视频`);
+        this.updateStatus(`✓ 已选择 ${data.videos.length} 个视频，拖动可排序`);
       } else if (data.error) {
         this.updateStatus(`错误: ${data.error}`);
         this.clearVideoList();
@@ -180,7 +181,9 @@ class PopupController {
   renderVideoList(videos) {
     const container = document.getElementById('video-list');
     container.innerHTML = videos.map((video, index) => `
-      <div class="video-item" data-index="${index}">
+      <div class="video-item" data-index="${index}" draggable="true">
+        <span class="index">${index + 1}</span>
+        <span class="drag-handle">☰</span>
         <input type="checkbox" id="video-${index}" checked>
         <span class="name" title="${video.name}">${video.name}</span>
         <span class="size">${this.formatSize(video.size)}</span>
@@ -200,15 +203,65 @@ class PopupController {
       checkbox.addEventListener('change', () => {
         this.updateSelectedVideos();
       });
+
+      item.addEventListener('dragstart', (e) => {
+        this.draggedItem = item;
+        item.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+      });
+
+      item.addEventListener('dragend', () => {
+        item.classList.remove('dragging');
+        this.draggedItem = null;
+        container.querySelectorAll('.video-item').forEach(i => i.classList.remove('drag-over'));
+      });
+
+      item.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        return false;
+      });
+
+      item.addEventListener('dragenter', () => {
+        if (item !== this.draggedItem) {
+          item.classList.add('drag-over');
+        }
+      });
+
+      item.addEventListener('dragleave', () => {
+        item.classList.remove('drag-over');
+      });
+
+      item.addEventListener('drop', (e) => {
+        e.stopPropagation();
+        
+        if (item !== this.draggedItem) {
+          const videos = [...this.selectedVideos];
+          const fromIndex = parseInt(this.draggedItem.dataset.index);
+          const toIndex = parseInt(item.dataset.index);
+          
+          const [movedVideo] = videos.splice(fromIndex, 1);
+          videos.splice(toIndex, 0, movedVideo);
+          
+          this.selectedVideos = videos;
+          this.renderVideoList(videos);
+          this.renderPublishQueue();
+        }
+        
+        item.classList.remove('drag-over');
+        return false;
+      });
     });
   }
 
   updateSelectedVideos() {
     const checkboxes = document.querySelectorAll('#video-list input:checked');
-    this.selectedVideos = Array.from(checkboxes).map(cb => {
+    const checkedItems = Array.from(checkboxes).map(cb => {
       const index = parseInt(cb.id.replace('video-', ''));
-      return this.videos[index];
+      return this.selectedVideos[index];
     }).filter(v => v !== undefined);
+    
+    this.selectedVideos = checkedItems;
     this.renderPublishQueue();
   }
 
@@ -220,10 +273,10 @@ class PopupController {
     }
     container.innerHTML = `
       <div style="color: #666; font-size: 12px; margin-bottom: 8px;">共 ${this.selectedVideos.length} 个视频待发布</div>
-      ${this.selectedVideos.map(video => `
+      ${this.selectedVideos.map((video, index) => `
         <div class="queue-item">
           <span class="status pending"></span>
-          <span>${video.name}</span>
+          <span>${index + 1}. ${video.name}</span>
         </div>
       `).join('')}
     `;
